@@ -1,9 +1,55 @@
 Getting set up
 ---------------
 
-1. @TODO Install behat
+1. Set up your composer file
 
-1. @TODO Set up behat.yml
+        {
+          "name": "drupal7-minimal-behat",
+          "description": "Test Drupal 7 minimal install profile with Behat",
+          "require": {
+            "drupal/drupal-extension": "*",
+            "drush/drush": "~6.0"
+          }
+        }
+
+
+1. Download composer.phar
+
+        curl http://getcomposer.org/installer | php
+
+1. Install via composer
+
+        ./composer.phar install
+
+1. Symlink executable
+
+        ln -s ./vendor/bin/behat behat
+
+1. Set up behat. This will create your features directory.
+
+        ./behat --init
+
+   Move features directory into a tests sub directory (more drupaly).
+
+        mkdir tests; mv features tests/features;
+
+1. Set up behat.yml (replace http://drupal7-minimal-behat.dev:8888 with whatever the URL is for your local site install):
+
+        default:
+          paths:
+            features: tests/features
+          extensions:
+            Behat\MinkExtension\Extension:
+              goutte: ~
+              selenium2: ~
+              default_session: goutte
+              javascript_session: selenium2
+              base_url: http://drupal7-minimal-behat.dev:8888
+            Drupal\DrupalExtension\Extension:
+              blackbox: ~
+
+
+
 
 
 Writing a behat test for Drupal, step-by-step
@@ -59,11 +105,11 @@ Writing a behat test for Drupal, step-by-step
         echo "  And I enter my password"                                        >> login.feature
         echo "  Then I successfully authenticate"                               >> login.feature
 
-1. Implement "step definitions" (PHP functions) to enable Behat to run the test
-   scenario(s) you invented. The easiest way to figure out what step definitions
-   you need to write and what they should be named is to run Behat as if you
-   were ready to run your tests. Behat will detect which scenarios are missing
-   step definitions and tell you what to do.
+1. Find out what "step definitions" (PHP functions) need to be implemented to
+   to enable Behat to run the test scenario(s) you invented. The easiest way to
+   figure out what step definitions you need to write and what they should be
+   named is to run Behat as if you were ready to run your tests. Behat will
+   detect which scenarios are missing step definitions and tell you what to do.
 
         cd /path/to/my-site-repo
         ./behat
@@ -110,10 +156,20 @@ Writing a behat test for Drupal, step-by-step
 
         test/features/bootstrap/FeatureContext.php
  
-   Happily, we are not starting from scratch. The drupal extension included in
-   our composer.json pulled in a bunch of Drupal step definitions created to
-   test the D6->D7 upgrade for drupal.org. Rather than write our own step
-   definitions, we can reuse existing ones.
+   Writing custom tests like ^^ this is pretty simple. But it's even easier to
+   reuse existing tests. The drupal extension included in
+   composer.json pulled in a bunch of Drupal step definitions created to
+   test the D6->D7 upgrade for drupal.org. Rather than start by writing our own step
+   definitions, lets see if there's anything there we can reuse.
+
+1. Check existing step definitions. Reuse any applicable before writing our own
+   new custom tests.
+
+     Check existing step definitions like this:
+
+        behat -dl
+
+     
 
 
 
