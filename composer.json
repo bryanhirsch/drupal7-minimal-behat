@@ -3,6 +3,6 @@
   "description": "Test Drupal 7 minimal install profile with Behat",
   "require": {
     "drupal/drupal-extension": "*",
-    "drush/drush": "~6.0",
+    "drush/drush": "~6.0"
   }
 }
