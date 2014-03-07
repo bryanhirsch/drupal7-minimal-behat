@@ -9,4 +9,5 @@ Scenario: Authenticate via user block on home page
   When I enter "admin" for "name"
   And I enter "admin" for "pass"
   And I press the "Log in" button
-  Then I successfully authenticate 
+  Then I should see the heading "Navigation"
+  And I should see the heading "Management"
