@@ -25,15 +25,14 @@ Getting set up
 
         ln -s ./vendor/bin/behat behat
 
-1. Set up behat. This will create your features directory.
+1. View available "step definitions" from drupal-extension included in composer.json.
 
-        ./behat --init
+        ./behat -dl
 
-   Move features directory into a tests sub directory (more drupaly).
-
-        mkdir tests; mv features tests/features;
-
-1. Set up behat.yml (replace http://drupal7-minimal-behat.dev:8888 with whatever the URL is for your local site install):
+1. Set up behat.yml. Replace http://drupal7-minimal-behat.dev:8888 with whatever
+   the URL is for your local site install. Note: By default Behat will create a
+   directory called "features" and look for your tests there. The YAML config below
+   chages this default to "tests/features".
 
         default:
           paths:
@@ -48,6 +47,23 @@ Getting set up
             Drupal\DrupalExtension\Extension:
               blackbox: ~
 
+1. Set up behat. This will create your features directory and stub out
+   FeatureContext.php (located here: features/bootstrap/FeatureContext.php) for
+   you.
+
+        ./behat --init
+
+   Try listing available step definitions again. If they don't work, something
+   went wrong with generating FeatureContext.php. Open it up and add/edit the
+   following lines.
+
+   Include DrupalContext class:
+
+        use Drupal\DrupalExtension\Context\DrupalContext;
+
+   FeatureContext should extend DrupalContext:
+
+        class FeatureContext extends DrupalContext
 
 
 
@@ -163,13 +179,97 @@ Writing a behat test for Drupal, step-by-step
    definitions, lets see if there's anything there we can reuse.
 
 1. Check existing step definitions. Reuse any applicable before writing our own
-   new custom tests.
+   new custom tests. Note: There is no actual difference between any of the
+   keywords available--Then, And, But, Given, When--to use at the start of each
+   the scenario line. They're all available so senarios are natural and
+   readable.
 
-     Check existing step definitions like this:
+   Check existing step definitions like this:
 
         behat -dl
 
-     
+   Make the following edit to use an existing step definition:
+
+    ```diff
+       Scenario: Authenticate via user block on home page
+      -  Given I'm on the home page
+      +  Given I am on the homepage
+         When I enter my username
+         And I enter my password
+         Then I successfully authenticate 
+    ```
+
+   Here are more we can reuse:
+
+    ```diff
+       Scenario: Authenticate via user block on home page
+         Given I am on the homepage
+      -  When I enter my username
+      +  When I enter "admin" for "name"
+         And I enter my password
+         Then I successfully authenticate 
+    ```
+
+    ```diff
+       Scenario: Authenticate via user block on home page
+         Given I am on the homepage
+         When I enter "admin" for "name"
+      -  And I enter my password
+      +  And I enter "admin" for "pass"
+         Then I successfully authenticate 
+    ```
+
+   There's nothing obvious for "successfully authenticate", but there are some
+   visible changes that happen when I log in successfully. Let's use those to test whether
+   authentication was successful.
+
+    ```diff
+      Scenario: Authenticate via user block on home page
+         When I enter "admin" for "name"
+         And I enter "admin" for "pass"
+         And I press the "Log in" button
+      -  Then I successfully authenticate 
+      +  Then I should see the heading "Navigation"
+      +  And I should see the heading "Management"
+    ```
+
+    Try running the your tests again. (It will fail.)
+
+        ./behat
+
+    We're entering info into the fields, but we forgot to press enter. 
+
+     ```diff
+      Scenario: Authenticate via user block on home page
+        Given I am on the homepage
+        When I enter "admin" for "name"
+        And I enter "admin" for "pass"
+     +  And I press the "Log in" button
+        Then I should see the heading "Navigation"
+        And I should see the heading "Management"
+    ```
+
+    Try running the your tests again. (This time it should pass!)
+
+        ./behat
+
+1. The test above is a good start. It works. And it's a lot better than no test!
+   But it's brittle. It relies on a particular username and password and block
+   configuration stored in the database. All of these are things site admins
+   change frequently. Here are a few ways we could harden our tests (there's no
+   single right way, you can probably think of more):
+
+    - use drush to get the username for user 1, then (re)set user 1's password
+    - start as an unauthenticated user, then log in, and then go to a path that
+      would not be accessible if you were not authenticated (like /admin)
+
+TODO See drupal-extension/README. Add the following examples:
+[ ] @api
+[ ] drush driver
+[ ] drupal bootstrap
+[ ] target content in specific regions
+[ ] alter text strings in available step definitions
+[ ] include foo.behat.inc in module foo
 
 
 
