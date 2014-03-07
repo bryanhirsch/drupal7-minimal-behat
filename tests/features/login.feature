@@ -6,7 +6,7 @@ Feature: login
 
 Scenario: Authenticate via user block on home page
   Given I am on the homepage
-  When I enter my username
+  When I enter "admin" for "name"
   And I enter my password
   Then I successfully authenticate 
 
