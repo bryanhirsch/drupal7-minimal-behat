@@ -7,6 +7,6 @@ default:
       selenium2: ~
       default_session: goutte
       javascript_session: selenium2
-      base_url: http://minimal.dev:8888
+      base_url: http://drupal7-minimal-behat.dev:8888
     Drupal\DrupalExtension\Extension:
       blackbox: ~
