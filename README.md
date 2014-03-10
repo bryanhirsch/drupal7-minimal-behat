@@ -7,6 +7,7 @@ Contents
  - [#writing-a-behat-test-for-drupal-step-by-step](#writing-a-behat-test-for-drupal-step-by-step)
  - [#helpful-commands](#helpful-commands)
  - [#behat-documentation-and-helpful-links](#behat-documentation-and-helpful-links)
+ - [#todo](#todo)
 
 Getting set up
 ---------------
