@@ -276,6 +276,12 @@ Writing a behat test for Drupal, step-by-step
     - start as an unauthenticated user, then log in, and then go to a path that
       would not be accessible if you were not authenticated (like /admin)
 
+
+Set up continuous integration with Travis CI
+--------------------------------------------
+
+
+
 @todo
 -----
  - [ ] automate with Travis CI
