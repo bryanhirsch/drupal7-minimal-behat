@@ -1,6 +1,8 @@
 Getting started with Behat: Drupal 7, Minimal install profile
 =============================================================
 
+https://travis-ci.org/bryanhirsch/drupal7-minimal-behat.png
+
 Contents
 --------
  - [#getting-set-up](#getting-set-up)
