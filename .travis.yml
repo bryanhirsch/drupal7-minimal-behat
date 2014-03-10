@@ -24,6 +24,9 @@ before_script:
   # navigate out of module directory to prevent blown stack by recursive module lookup
   # - cd ../..
 
+  # install dependencies managed by composer
+  - composer install
+
   # debugging  
   - ls -l
   - pwd
