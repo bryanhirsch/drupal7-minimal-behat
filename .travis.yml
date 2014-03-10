@@ -27,6 +27,7 @@ before_script:
   # debugging  
   - ls -l
   - pwd
+  - ls -la vendor/drupal/drupal-extension/src/Drupal/DrupalExtension/
 
   # start with a fresh settings.php for a clean install
   - rm docroot/sites/default/settings.php
