@@ -1,3 +1,13 @@
+Getting started with Behat: Drupal 7, Minimal install profile
+=============================================================
+
+Contents
+--------
+ - [#getting-set-up](#getting-set-up)
+ - [#writing-a-behat-test-for-drupal-step-by-step](#writing-a-behat-test-for-drupal-step-by-step)
+ - [#helpful-commands](#helpful-commands)
+ - [#behat-documentation](#behat-documentation)
+
 Getting set up
 ---------------
 
@@ -275,21 +285,26 @@ TODO See drupal-extension/README. Add the following examples:
 
 Helpful commands
 -----------------
-# See available behat "step definitions"
-./vendor/bin/behat ./behat.local.yml -dl
+See available behat "step definitions"
 
-# symlink for convenience
-ln -s ./vendor/bin/behat behat
+        ./vendor/bin/behat ./behat.local.yml -dl
 
-# run behat (using default behat.yml)
-behat
+symlink for convenience
 
-# run behat (using your own config)
-behat -c behat.my-config.yml
+        ln -s ./vendor/bin/behat behat
+
+run behat (using default behat.yml)
+
+        behat
+
+run behat (using your own config)
+
+        behat -c behat.my-config.yml
 
 
-Behat documentation
---------------------
+Behat documentation and helpful links
+--------------------------------------
  - [Docs](http://docs.behat.org/quick_intro.html)
  - [Quick Intro](http://docs.behat.org/quick_intro.html)
-
+ - [Drupal.org BDD](http://drupal.org/project/doobie)
+ - [Behat Drupal Extension](https://drupal.org/project/drupalextension)
