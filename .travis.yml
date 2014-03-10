@@ -26,6 +26,7 @@ before_script:
 
   # install dependencies managed by composer
   - composer install
+  - git submodule init
 
   # debugging  
   - ls -l
