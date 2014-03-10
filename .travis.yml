@@ -24,6 +24,10 @@ before_script:
   # navigate out of module directory to prevent blown stack by recursive module lookup
   # - cd ../..
 
+ # debugging 
+  - ls -l
+  - pwd
+  
   # create new site, stubbing sendmail path with true to prevent delivery errors and manually resolving drush path
   - mysql -e 'create database drupal7_minimal_behat'
   - php -d sendmail_path=`which true` `pear config-get php_dir`/drush/drush.php --yes site-install minimal --db-url=mysql://root:@127.0.0.1/drupal7_minimal_behat --account-name=admin --account-pass=admin
