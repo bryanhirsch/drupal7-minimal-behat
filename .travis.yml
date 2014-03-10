@@ -28,6 +28,10 @@ before_script:
   - ls -l
   - pwd
 
+  # start with a fresh settings.php for a clean install
+  - rm docroot/sites/default/settings.php
+  - cp docroot/sites/default/default.settings.php docroot/sites/default/settings.php
+
   # navigate into docroot, where we're going to install the site
   - cd docroot
   
