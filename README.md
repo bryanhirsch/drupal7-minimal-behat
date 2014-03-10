@@ -6,7 +6,7 @@ Contents
  - [#getting-set-up](#getting-set-up)
  - [#writing-a-behat-test-for-drupal-step-by-step](#writing-a-behat-test-for-drupal-step-by-step)
  - [#helpful-commands](#helpful-commands)
- - [#behat-documentation](#behat-documentation)
+ - [#behat-documentation-and-helpful-links](#behat-documentation-and-helpful-links)
 
 Getting set up
 ---------------
@@ -75,7 +75,9 @@ Getting set up
 
         class FeatureContext extends DrupalContext
 
-
+1. Install Drupal 7 using the core "minmal" profile. Set up user 1 with the
+   credentials username: admin, password: admin. This is all you need to
+   follow along with examples below.
 
 
 Writing a behat test for Drupal, step-by-step
@@ -273,13 +275,16 @@ Writing a behat test for Drupal, step-by-step
     - start as an unauthenticated user, then log in, and then go to a path that
       would not be accessible if you were not authenticated (like /admin)
 
-TODO See drupal-extension/README. Add the following examples:
-[ ] @api
-[ ] drush driver
-[ ] drupal bootstrap
-[ ] target content in specific regions
-[ ] alter text strings in available step definitions
-[ ] include foo.behat.inc in module foo
+@todo
+-----
+ - [ ] automate with Travis CI
+ - See drupal-extension/README. Add the following examples:
+   - [ ] include foo.behat.inc in module foo
+   - [ ] @api
+   - [ ] drush driver
+   - [ ] drupal bootstrap
+   - [ ] target content in specific regions
+   - [ ] alter text strings in available step definitions
 
 
 
