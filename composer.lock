@@ -409,6 +409,12 @@
                 "url": "http://git.drupal.org/project/drupalextension.git",
                 "reference": "da8a8468d3ca72eaef4d5b09f4929ea19f785eca"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jhedstrom/drupalextension/zipball/",
+                "reference": "da8a8468d3ca72eaef4d5b09f4929ea19f785eca",
+                "shasum": ""
+            },
             "require": {
                 "behat/behat": "2.5.*@stable",
                 "behat/mink": "1.5.*@stable",
