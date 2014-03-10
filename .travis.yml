@@ -26,11 +26,11 @@ before_script:
 
   # install dependencies managed by composer
   - composer install
-  - git submodule init
 
   # debugging  
   - ls -l
   - pwd
+  # - ls -la vendor/drupal/drupal-extension/src/Drupal/DrupalExtension/
   - ls -la vendor/drupal/drupal-extension/src/Drupal/DrupalExtension/
 
   # start with a fresh settings.php for a clean install
