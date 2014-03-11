@@ -27,13 +27,19 @@ Getting set up
         }
 
 
-1. Download composer.phar
+1. Download composer.phar to the top-level directory of your site repo. (If you
+   have composer installed already, you can skip this.)
 
         curl http://getcomposer.org/installer | php
 
-1. Install via composer
+1. Install via composer (from top-level directory in your repo).
 
+        # Install with composer.phar.
         ./composer.phar install
+
+        # If composer was already installed on your machine you can install like
+        # this.
+        composer install
 
 1. Symlink executable
 
