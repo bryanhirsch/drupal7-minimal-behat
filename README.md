@@ -78,11 +78,17 @@ Getting set up
    went wrong with generating FeatureContext.php. Open it up and add/edit the
    following lines.
 
-   Include DrupalContext class:
+   Edit this file:
+
+        tests/features/bootstrap/FeatureContext.php 
+
+   Include DrupalContext class (paste this around line 9, below other similar
+   looking lines):
 
         use Drupal\DrupalExtension\Context\DrupalContext;
 
-   FeatureContext should extend DrupalContext:
+   FeatureContext should extend DrupalContext (replace the word "BehatContext"
+   with "DrupalContext" like the line below):
 
         class FeatureContext extends DrupalContext
 
