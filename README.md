@@ -208,40 +208,40 @@ Writing a behat test for Drupal, step-by-step
 
    Make the following edit to use an existing step definition:
 
-  ```diff
+   ```diff
      Scenario: Authenticate via user block on home page
     -  Given I'm on the home page
     +  Given I am on the homepage
        When I enter my username
        And I enter my password
        Then I successfully authenticate 
-  ```
+   ```
 
    Here are more we can reuse:
 
-  ```diff
+   ```diff
      Scenario: Authenticate via user block on home page
        Given I am on the homepage
     -  When I enter my username
     +  When I enter "admin" for "name"
        And I enter my password
        Then I successfully authenticate 
-  ```
+   ```
 
-  ```diff
+   ```diff
      Scenario: Authenticate via user block on home page
        Given I am on the homepage
        When I enter "admin" for "name"
     -  And I enter my password
     +  And I enter "admin" for "pass"
        Then I successfully authenticate 
-  ```
+   ```
 
    There's nothing obvious for "successfully authenticate", but there are some
    visible changes that happen when I log in successfully. Let's use those to test whether
    authentication was successful.
 
-  ```diff
+   ```diff
     Scenario: Authenticate via user block on home page
        When I enter "admin" for "name"
        And I enter "admin" for "pass"
@@ -249,7 +249,7 @@ Writing a behat test for Drupal, step-by-step
     -  Then I successfully authenticate 
     +  Then I should see the heading "Navigation"
     +  And I should see the heading "Management"
-  ```
+   ```
 
     Try running the your tests again. (It will fail.)
 
@@ -265,7 +265,7 @@ Writing a behat test for Drupal, step-by-step
    +  And I press the "Log in" button
       Then I should see the heading "Navigation"
       And I should see the heading "Management"
-  ```
+   ```
 
     Try running the your tests again. (This time it should pass!)
 
