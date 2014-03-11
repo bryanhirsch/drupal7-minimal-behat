@@ -45,10 +45,6 @@ Getting set up
 
         ln -s ./vendor/bin/behat behat
 
-1. View available "step definitions" from drupal-extension included in composer.json.
-
-        ./behat -dl
-
 1. Set up behat.yml file using the contents below. Replace
    http://drupal7-minimal-behat.dev:8888 with whatever the URL is for your local
    site install. Note: By default Behat will create a
@@ -67,6 +63,10 @@ Getting set up
               base_url: http://drupal7-minimal-behat.dev:8888
             Drupal\DrupalExtension\Extension:
               blackbox: ~
+
+1. View available "step definitions" from drupal-extension included in composer.json.
+
+        ./behat -dl
 
 1. Set up behat. This will create your features directory and stub out
    FeatureContext.php (located here: features/bootstrap/FeatureContext.php) for
