@@ -14,7 +14,8 @@ Contents
 Getting set up
 ---------------
 
-1. Set up your composer file
+1. Set up your composer.json file with these contents. (This file should be in
+   the top-level directory of your site repo, a sybling to docroot.)
 
         {
           "name": "drupal7-minimal-behat",
