@@ -49,8 +49,9 @@ Getting set up
 
         ./behat -dl
 
-1. Set up behat.yml. Replace http://drupal7-minimal-behat.dev:8888 with whatever
-   the URL is for your local site install. Note: By default Behat will create a
+1. Set up behat.yml file using the contents below. Replace
+   http://drupal7-minimal-behat.dev:8888 with whatever the URL is for your local
+   site install. Note: By default Behat will create a
    directory called "features" and look for your tests there. The YAML config below
    chages this default to "tests/features".
 
