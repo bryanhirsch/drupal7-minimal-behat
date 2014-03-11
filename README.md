@@ -90,7 +90,7 @@ Writing a behat test for Drupal, step-by-step
    test/features/my-feature.feature. In this example, we're going to test the login
    feature provided by Drupal core's User module.
 
-        cd /path/to/my-site-repo/test/features
+        cd /path/to/my-site-repo/tests/features
         touch login.feature
         echo "# features/login.feature" >> login.feature
 
@@ -109,17 +109,17 @@ Writing a behat test for Drupal, step-by-step
         echo "  I need to be able to authenticate using my username and password" >> login.feature
         echo ""                                                                   >> login.feature
 
-1. Each feature is tested by one or more "scenarios". Each scenario follows the
+1. Each feature is examined by one or more test "scenarios". Each scenario follows the
    same basic format: Given, When, Then. Like this:
 
-        Scenario: [Some description of the scenario]
+      Scenario: [Some description of the scenario]
           Given [some context]
-          When [some event]
-          Then [outcome]
+           When [some event]
+           Then [outcome]
    
    More detailed scenarios can be created with And and But. Like this:
 
-        Scenario: [Some description of the scenario]
+      Scenario: [Some description of the scenario]
           Given [some context]
             And [more context]
            When [some event]
@@ -136,16 +136,17 @@ Writing a behat test for Drupal, step-by-step
         echo "  And I enter my password"                                        >> login.feature
         echo "  Then I successfully authenticate"                               >> login.feature
 
-1. Find out what "step definitions" (PHP functions) need to be implemented to
-   to enable Behat to run the test scenario(s) you invented. The easiest way to
-   figure out what step definitions you need to write and what they should be
-   named is to run Behat as if you were ready to run your tests. Behat will
-   detect which scenarios are missing step definitions and tell you what to do.
+1. Now try running this test. If Behat doesn't know what to do during any of the
+   steps defined in your test scenario, it will tell you. (Since we just made
+   all this up, we do not expect Behat to be able to complete our test. But
+   Behat will give us a nice neat list of PHP functions to implement in order to
+   make this test fully functional.)
 
         cd /path/to/my-site-repo
         ./behat
 
-   Behat stubs out PHP functions for you and gives you instructions like this:
+   Behat stubs out PHP functions for each of the steps defined in your
+   scenario--called "step definitions"--and gives you instructions like this:
 
         You can implement step definitions for undefined steps with these snippets:
 
@@ -188,16 +189,18 @@ Writing a behat test for Drupal, step-by-step
         test/features/bootstrap/FeatureContext.php
  
    Writing custom tests like ^^ this is pretty simple. But it's even easier to
-   reuse existing tests. The drupal extension included in
-   composer.json pulled in a bunch of Drupal step definitions created to
-   test the D6->D7 upgrade for drupal.org. Rather than start by writing our own step
-   definitions, lets see if there's anything there we can reuse.
+   reuse existing tests. The drupal extension included in composer.json pulled
+   in a bunch of Drupal-specific step definitions we can  use. Rather than start
+   by writing our own step definitions, lets see if there's anything there we
+   can reuse. (Note also: If/When you DO need to invent custom step definitions,
+   check out the README included in the [Behat Drupal
+   Extension](https://drupal.org/project/drupalextension) project to see how to
+   best leverage and extend all the great work that's already done there for you.)
 
 1. Check existing step definitions. Reuse any applicable before writing our own
-   new custom tests. Note: There is no actual difference between any of the
-   keywords available--Then, And, But, Given, When--to use at the start of each
-   the scenario line. They're all available so senarios are natural and
-   readable.
+   new custom tests. (Note: At a technical level, there is no difference between
+   Then, And, But, Given, When used at the start of each the line. Any available
+   step definition can begin with any of these keywords.)
 
    Check existing step definitions like this:
 
@@ -205,48 +208,48 @@ Writing a behat test for Drupal, step-by-step
 
    Make the following edit to use an existing step definition:
 
-    ```diff
-       Scenario: Authenticate via user block on home page
-      -  Given I'm on the home page
-      +  Given I am on the homepage
-         When I enter my username
-         And I enter my password
-         Then I successfully authenticate 
-    ```
+  ```diff
+     Scenario: Authenticate via user block on home page
+    -  Given I'm on the home page
+    +  Given I am on the homepage
+       When I enter my username
+       And I enter my password
+       Then I successfully authenticate 
+  ```
 
    Here are more we can reuse:
 
-    ```diff
-       Scenario: Authenticate via user block on home page
-         Given I am on the homepage
-      -  When I enter my username
-      +  When I enter "admin" for "name"
-         And I enter my password
-         Then I successfully authenticate 
-    ```
+  ```diff
+     Scenario: Authenticate via user block on home page
+       Given I am on the homepage
+    -  When I enter my username
+    +  When I enter "admin" for "name"
+       And I enter my password
+       Then I successfully authenticate 
+  ```
 
-    ```diff
-       Scenario: Authenticate via user block on home page
-         Given I am on the homepage
-         When I enter "admin" for "name"
-      -  And I enter my password
-      +  And I enter "admin" for "pass"
-         Then I successfully authenticate 
-    ```
+  ```diff
+     Scenario: Authenticate via user block on home page
+       Given I am on the homepage
+       When I enter "admin" for "name"
+    -  And I enter my password
+    +  And I enter "admin" for "pass"
+       Then I successfully authenticate 
+  ```
 
    There's nothing obvious for "successfully authenticate", but there are some
    visible changes that happen when I log in successfully. Let's use those to test whether
    authentication was successful.
 
-    ```diff
-      Scenario: Authenticate via user block on home page
-         When I enter "admin" for "name"
-         And I enter "admin" for "pass"
-         And I press the "Log in" button
-      -  Then I successfully authenticate 
-      +  Then I should see the heading "Navigation"
-      +  And I should see the heading "Management"
-    ```
+  ```diff
+    Scenario: Authenticate via user block on home page
+       When I enter "admin" for "name"
+       And I enter "admin" for "pass"
+       And I press the "Log in" button
+    -  Then I successfully authenticate 
+    +  Then I should see the heading "Navigation"
+    +  And I should see the heading "Management"
+  ```
 
     Try running the your tests again. (It will fail.)
 
@@ -254,15 +257,15 @@ Writing a behat test for Drupal, step-by-step
 
     We're entering info into the fields, but we forgot to press enter. 
 
-     ```diff
-      Scenario: Authenticate via user block on home page
-        Given I am on the homepage
-        When I enter "admin" for "name"
-        And I enter "admin" for "pass"
-     +  And I press the "Log in" button
-        Then I should see the heading "Navigation"
-        And I should see the heading "Management"
-    ```
+   ```diff
+    Scenario: Authenticate via user block on home page
+      Given I am on the homepage
+      When I enter "admin" for "name"
+      And I enter "admin" for "pass"
+   +  And I press the "Log in" button
+      Then I should see the heading "Navigation"
+      And I should see the heading "Management"
+  ```
 
     Try running the your tests again. (This time it should pass!)
 
@@ -286,14 +289,15 @@ Set up continuous integration with Travis CI
 
 @todo
 -----
- - [ ] automate with Travis CI
  - See drupal-extension/README. Add the following examples:
+   - [ ] @javascript
    - [ ] include foo.behat.inc in module foo
    - [ ] @api
    - [ ] drush driver
    - [ ] drupal bootstrap
    - [ ] target content in specific regions
    - [ ] alter text strings in available step definitions
+ - [ ] automate with Travis CI
 
 
 
