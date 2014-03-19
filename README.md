@@ -126,21 +126,21 @@ Writing a behat test for Drupal, step-by-step
 1. Each feature is examined by one or more test "scenarios". Each scenario follows the
    same basic format: Given, When, Then. Like this:
 
-      Scenario: [Some description of the scenario]
-          Given [some context]
-           When [some event]
-           Then [outcome]
+        Scenario: [Some description of the scenario]
+            Given [some context]
+             When [some event]
+             Then [outcome]
    
    More detailed scenarios can be created with And and But. Like this:
 
-      Scenario: [Some description of the scenario]
-          Given [some context]
-            And [more context]
-           When [some event]
-            And [second event occurs]
-           Then [outcome]
-            And [another outcome]
-            But [another outcome]
+        Scenario: [Some description of the scenario]
+            Given [some context]
+              And [more context]
+             When [some event]
+              And [second event occurs]
+             Then [outcome]
+              And [another outcome]
+              But [another outcome]
 
    Continuing our login example:
 

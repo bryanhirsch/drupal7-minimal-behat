@@ -5,7 +5,7 @@ Feature: login
   I need to be able to authenticate using my username and password
 
 Scenario: Authenticate via user block on home page
-  Given I am on the homepage
+  Given I am on homepage
   When I enter "admin" for "name"
   And I enter "admin" for "pass"
   And I press the "Log in" button
