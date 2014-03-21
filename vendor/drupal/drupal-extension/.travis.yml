@@ -1,0 +1,31 @@
+language: php
+
+php: 
+  - 5.3
+  - 5.4
+
+mysql:
+  database: drupal
+  username: root
+  encoding: utf8
+
+install:
+  - composer install
+  - "mysql -e 'create database drupal;'"
+  - sudo apt-get update > /dev/null
+  - sudo apt-get --quiet=2 install php5-cgi php5-curl php5-gd php5-mysql > /dev/null
+  - pear channel-discover pear.drush.org
+  - pear install drush/drush
+  - phpenv rehash
+
+before_script:
+  # Setup a stock Drupal 7 install to test api abilities.
+  - drush --quiet dl drupal-7 --drupal-project-rename=drupal7
+  - drush --quiet --yes --root=$PWD/drupal7 site-install --db-url=mysql://root:@127.0.0.1/drupal
+  - drush --quiet --yes --root=$PWD/drupal7 runserver :8888 > /dev/null 2>&1 &
+  - sleep 4s
+
+script:
+  - vendor/bin/behat -fprogress
+  - vendor/bin/behat -fprogress --profile=drupal7
+  - vendor/bin/behat -fprogress --profile=drush
